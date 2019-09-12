@@ -6,8 +6,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,7 +56,24 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  function playSound(event){  
+    const audio_element = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    if (!audio_element) return;
+    audio_element.currentTime = 0;
+    audio_element.play();
+    const key = document.querySelector(`div[data-key="${event.keyCode}"]`);
+    if (!key) return;
+    key.classList.add('playing');
+  }
 
+  function removePlaying(event){
+    //Remove the class for every event that is present in order to no get some keys glued 
+    event.target.classList.remove('playing');
+  }
+
+  const keys = Array.from(document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removePlaying));
+  window.addEventListener('keydown', playSound);
 </script>
 
 
