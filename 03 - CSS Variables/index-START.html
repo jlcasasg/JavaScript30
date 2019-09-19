@@ -21,7 +21,21 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+  :root {
+    --spacing: 10px;
+    --blur: 10px;
+    --base: #ff44aa;
+  }
 
+  img {
+    padding: var(--spacing);
+    background: var(--base);
+    filter: blur(var(--blur));
+  }
+
+  .hl {
+    color: var(--base);
+  }
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -45,6 +59,19 @@
   </style>
 
   <script>
+    const inputs = document.querySelectorAll('.controls input');
+
+    function eventHandler(){
+      const sufix = this.dataset.sizing || '';
+      console.log(`--${this.value}${sufix}`);
+      
+      document.documentElement.style.setProperty(`--${this.name}`, `${this.value}${sufix}`);
+    }
+
+    inputs.forEach(input => {
+      input.addEventListener('change', eventHandler);
+      input.addEventListener('mousemove', eventHandler);
+    })
   </script>
 
 </body>
