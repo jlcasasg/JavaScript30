@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Array Cardio 💪</title>
 </head>
+
 <body>
   <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
   <script>
@@ -31,17 +33,35 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    let inventorsFilteredByBornYear = inventors.filter(item => item.year >= 1500 && item.year < 1600);
+    console.log(inventorsFilteredByBornYear);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    let firstNameAndLastNameConcat = inventors.map(item => { return item.first + ' ' + item.last });
+    console.log(firstNameAndLastNameConcat);
+
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    let sortedInventorByBirthdate = inventors.sort((item, item2) => item.year - item2.year);
+    console.log(sortedInventorByBirthdate);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    let yearsOfLiving = inventors.reduce((result, item) => { return result + (item.passed - item.year) }, 0);
+
+    console.log(yearsOfLiving);
+
 
     // 5. Sort the inventors by years lived
+    let inventorsSortedByYearsLived = inventors.sort((a, b) => {
+      let years1 = a.passed - a.year;
+      let years2 = b.passed - b.year;
+      return years1 > years2 ? -1 : 1;
+    });
+    console.log(inventorsSortedByYearsLived);
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -49,11 +69,26 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    let orderedPeople = people.sort((a, b) => {
+      let [aFirst, aLast] = a.split(',');
+      let [bFirst, bLast] = b.split(',');
+
+      return aLast < bLast ? -1 : 1;
+    });
+    console.log(orderedPeople);
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+    let instances = data.reduce((result, item) => {
+      if (!result[item]) result[item] = 0;
+      result[item]++;
+      return result;
+    }, {});
+    console.log(instances);
 
   </script>
 </body>
+
 </html>
