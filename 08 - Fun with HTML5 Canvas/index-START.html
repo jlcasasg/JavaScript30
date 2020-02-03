@@ -26,7 +26,7 @@
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
-    let direction = true;
+    let direction = false;
 
     function draw(e) {
       if (!isDrawing) return;
@@ -42,7 +42,7 @@
 
       if (context.lineWidth >= 100 || context.lineWidth <= 1) { direction = !direction }
 
-      if (direction) {
+      if (!direction) {
         context.lineWidth++;
       }
       else {
