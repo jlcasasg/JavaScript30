@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Whack A Mole!</title>
   <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <h1>Whack-a-mole! <span class="score">0</span></h1>
@@ -32,11 +34,63 @@
     </div>
   </div>
 
-<script>
-  const holes = document.querySelectorAll('.hole');
-  const scoreBoard = document.querySelector('.score');
-  const moles = document.querySelectorAll('.mole');
+  <script>
+    const holes = document.querySelectorAll('.hole');
+    const scoreBoard = document.querySelector('.score');
+    const moles = document.querySelectorAll('.mole');
+    let lastHole, win = false, score = 0;
 
-</script>
+
+    function randTime(min, max) {
+      return Math.round(Math.random() * (max - min) + min);
+    }
+
+    function randomHole(holes) {
+      const hole = holes[Math.round(Math.random() * holes.length) - 1]
+      if (hole === lastHole) {
+        return randomHole(hole);
+      }
+      lastHole = hole;
+      return hole;
+    }
+
+    function peep() {
+      if (win) return;
+      const time = randTime(200, 1000);
+      const hole = randomHole(holes);
+      if (hole) {
+        hole.classList.add('up');
+        setTimeout(() => {
+          hole.classList.remove('up');
+          peep();
+        }, time)
+      }
+      else {
+        peep();
+      }
+    }
+
+
+    function startGame() {
+      win = false;
+      score = 0;
+      scoreBoard.textContent = score;
+      peep();
+    }
+
+    function bonk(e) {
+      if (!e.isTrusted) return //Fake click
+      score++;
+      this.classList.remove('up');
+      scoreBoard.textContent = score;
+      if (score > 10) {
+        win = true;
+      }
+
+    }
+
+    moles.forEach(mole => mole.addEventListener('click', bonk, {}));
+  </script>
 </body>
+
 </html>
